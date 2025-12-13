@@ -289,6 +289,7 @@
                         <div class="page-footer">
                           
                           <button class="btn btn-sm btn-gradient-success py-3" onclick="daftar()">Daftar</button>
+                            <button class="btn btn-sm btn-gradient-secondary py-3" onclick="tampil()">View</button>
                           <button class="btn btn-sm btn-gradient-danger py-3" onclick="startup()">Batal</button>
                           
                         </div>   
@@ -411,6 +412,22 @@
           }  
           })
               
+      }
+
+      function tampil() {
+         var a = document.getElementById("textnorm").value; 
+          const myElement = document.getElementById('listdatapasien');
+           $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/kunjungan_get?norm="+a+"&poli=IGD",
+          dataType:"JSON",
+          success:function(response){
+            console.log(response);
+             document.getElementById("card_list_pasien").style.visibility = "visible";
+            //const jsonData = JSON.stringify(response);
+            myElement.innerHTML ="<tr><td><center>"+response[0].noregister+"</td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal+"</center></td><td><center>"+response[0].tanggal+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td></tr>";
+          }  
+          })
       }
 
       function register_px(a)
