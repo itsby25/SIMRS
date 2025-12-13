@@ -385,6 +385,7 @@
 
       function startup()
       {
+            window.location.reload();  
             document.getElementById("card_list_pasien").style.visibility = "hidden";
             document.getElementById("card_pendaftaran").style.visibility = "hidden";
             document.getElementById("card_list_emr").style.visibility = "hidden";
