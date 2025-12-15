@@ -51,7 +51,7 @@ class crudcontroller extends Controller
         //echo $norm;
         $simpan= new Pasien();
         $simpan->norm = $norm;
-        $simpan->nama = $request->nama.$request->title; 
+        $simpan->nama = strtoupper($request->nama.$request->title); 
         $simpan->no_id = $request->ktp;
         $simpan->kd_id =1;
         $simpan->marga=$request->marga;

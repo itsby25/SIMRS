@@ -333,6 +333,9 @@
                                         <th>
                                             <center> TRIASE </center>
                                         </th>
+                                        <th>
+                                            <center> ACTION </center>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody id="listdatapasien">
@@ -423,7 +426,7 @@
             console.log(response);
              document.getElementById("card_list_pasien").style.visibility = "visible";
             //const jsonData = JSON.stringify(response);
-            myElement.innerHTML ="<tr><td><center>"+response[0].noregister+"</td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal+"</center></td><td><center>"+response[0].tanggal+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td></tr>";
+            myElement.innerHTML ="<tr><td><center>"+response[0].noregister+"</td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal.substring(0,10)+"</center></td><td><center>"+response[0].tanggal.substring(11)+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td><td><p><button class='btn btn-sm btn-gradient-info py-3'>Batalkan<br>Kunjungan</button></p></td></tr>";
           }  
           })
       }
@@ -494,7 +497,7 @@
             console.log(response);
              document.getElementById("card_pendaftaran").style.visibility = "visible";
             //const jsonData = JSON.stringify(response);
-            myElement.innerHTML ="<tr><td><center>"+response[0].noregister+"</td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal+"</center></td><td><center>"+response[0].tanggal+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td></tr>";
+            myElement.innerHTML ="<tr><td><center>"+response[0].noregister+"</td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal.substring(0,10)+"</center></td><td><center>"+response[0].tanggal.substring(11)+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td><td><p><button class='btn btn-sm btn-gradient-info py-3'>Batalkan<br>Kunjungan</button></p></td></tr>";
           }  
           })
       }
