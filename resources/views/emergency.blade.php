@@ -92,20 +92,20 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="/tindakan_igd" aria-expanded="false" aria-controls="tables">
-                <span class="menu-title">List Pasien IGD</span>
+                <span class="menu-title">List Pasien IGD Hari ini</span>
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
 
-            <li>
+            <li class="nav-item">
            <div class="row table-responsive">
                         <table class="table table-striped table-bordered table-hover order-column" border="1" width="100%">
                                 <thead class="btn-success">
                                     <tr>
-                                        <th>
-                                        <center> NO.Antiran </center>    
-                                        <center> NO.RM </center>
-                                        </th>                                 
+                                        <th><center> NO.Antiran </center></th>
+                                        <th><center> NO.Registrasi </center></th>    
+                                        <th><center> NO.RM </center></th>
+                                                                         
                                     </tr>
                                 </thead>
                                 <tbody id="navdatatable">
@@ -115,9 +115,9 @@
                                             <center><b>Tidak ada data</b></center>
                                         </td>-->
                                        
-                                         <td> 
-                                             <center><b> {{ $kun->antrian }} </b></center>                                 
-                                            <center><b> {{ $kun->norm }}<br>{{ $kun->nama }} </b></center>
+                                         <td><center><b> {{ $kun->antrian }} </b></center></td> 
+                                             <td><center><b> {{ $kun->noregister }} </b></center></td>                                
+                                            <td><center><b> {{ $kun->norm }}<br>{{ $kun->nama }} </b></center></td>
                                         </td>
                                     </tr>
                                    @endforeach 

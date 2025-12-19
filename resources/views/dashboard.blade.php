@@ -57,6 +57,8 @@
                   <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
               </div>
             </li>
+            
+
             <!--<li class="nav-item d-none d-lg-block full-screen-link">
               <a class="nav-link">
                 <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
@@ -109,6 +111,38 @@
                 <span class="menu-title">Dashboard</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="/tindakan_igd" aria-expanded="false" aria-controls="tables">
+                <span class="menu-title">Data Norm Terakhir</span>
+                <i class="mdi mdi-table-large menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+            <div class="row table-responsive">
+                        <table class="table table-striped table-bordered table-hover order-column" border="1" width="100%">
+                                <thead class="btn-success">
+                                    <tr>
+                                        <th><center> Norm </center></th>    
+                                        <th><center> Nama </center></th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody id="navdatatable">
+                                   @foreach ($latest_norm as $latest)
+                                    <tr>
+                                       <!-- <td colspan="1">
+                                            <center><b>Tidak ada data</b></center>
+                                        </td>-->
+                                       
+                                          
+                                             <td><center><b> {{ $latest->norm }} </b></center></td> 
+                                             <td><center><b> {{ $latest->nama }} </b></center></td>                                            
+                                        
+                                    </tr>
+                                   @endforeach 
+                                </tbody>
+                            </table>
+            </li>
+
             <!--<li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Basic UI Elements</span>

@@ -70,8 +70,6 @@ class maincontroller extends Controller
 
       $uname=$request->username;
       $passwd=$request->passwd;
-
-
       $get_user=Users::Where('username',$uname)->Where('password',md5($passwd))->count();
       $request->session()->put('username',$uname);
       
@@ -84,7 +82,8 @@ class maincontroller extends Controller
             $user= $request->session()->get('username');
             $profile=Users::Where('username',$user);
             $total_pasien=Pasien::All()->count();
-            return view('dashboard',compact('user','profile','total_pasien'));
+            $latest_norm= Pasien::SELECT('norm','nama')->Orderby('id','DESC')->limit(1)->get();
+            return view('dashboard',compact('user','profile','total_pasien','latest_norm'));
             break;
       }
      
