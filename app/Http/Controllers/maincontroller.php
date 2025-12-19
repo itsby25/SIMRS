@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Users;
 use App\Models\Pasien;
+use App\Models\Kunjungan;
 
 use Illuminate\Http\Request;
 
@@ -14,8 +15,9 @@ class maincontroller extends Controller
     }
 
     public function igd() {
-
-        return view('emergency');
+        $tday=DATE("Y-m-d");
+        $kunjungan_hi=Kunjungan::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister','kunjungan.id As antrian')->Join('pasien','kunjungan.norm','=','pasien.norm')->Where('noregister','LIKE',"IGD%")->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday."%")->OrderBy('kunjungan.id','ASC')->get();
+        return view('emergency',compact('kunjungan_hi'));
     }
 
     public function rawin() {

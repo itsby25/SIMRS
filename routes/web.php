@@ -37,3 +37,4 @@ Route::post('pasien_new',[crudcontroller::class,'patient_add']);
 Route::get('pasien_get',[crudcontroller::class,'get_data_pasien']);
 Route::get('kunjungan_new',[crudcontroller::class,'add_data_kunjungan']);
 Route::get('kunjungan_get',[crudcontroller::class,'get_data_kunjungan']);
+Route::get('kunjungan_all',[crudcontroller::class,'get_data_kunjungan_all']);

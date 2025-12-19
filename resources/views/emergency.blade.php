@@ -92,9 +92,37 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="/tindakan_igd" aria-expanded="false" aria-controls="tables">
-                <span class="menu-title">Form Tindakan IGD</span>
+                <span class="menu-title">List Pasien IGD</span>
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
+            </li>
+
+            <li>
+           <div class="row table-responsive">
+                        <table class="table table-striped table-bordered table-hover order-column" border="1" width="100%">
+                                <thead class="btn-success">
+                                    <tr>
+                                        <th>
+                                        <center> NO.Antiran </center>    
+                                        <center> NO.RM </center>
+                                        </th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody id="navdatatable">
+                                   @foreach ($kunjungan_hi as $kun)
+                                    <tr>
+                                       <!-- <td colspan="1">
+                                            <center><b>Tidak ada data</b></center>
+                                        </td>-->
+                                       
+                                         <td> 
+                                             <center><b> {{ $kun->antrian }} </b></center>                                 
+                                            <center><b> {{ $kun->norm }}<br>{{ $kun->nama }} </b></center>
+                                        </td>
+                                    </tr>
+                                   @endforeach 
+                                </tbody>
+                            </table>
             </li>
             <!--<li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -357,9 +385,8 @@
                   </div>
                 </div>
               </div>
-
               </div>
-            </div>
+          </div>
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:../../partials/_footer.html -->
@@ -382,6 +409,7 @@
       $(document).ready(function() { 
     	view_norm();
       view_nama();
+      view_all();
       });
 
       function startup()
@@ -389,6 +417,7 @@
             document.getElementById("card_list_pasien").style.visibility = "hidden";
             document.getElementById("card_pendaftaran").style.visibility = "hidden";
             document.getElementById("card_list_emr").style.visibility = "hidden";
+           
       }
 
       function daftar()
@@ -479,6 +508,25 @@
              document.getElementById("card_pendaftaran").style.visibility = "visible";
             //const jsonData = JSON.stringify(response);
             myElement.innerHTML ="<td><center>"+response[0].norm+"</td><td><center>"+response[0].no_id+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tgl_lahir+"</center></td><td><center>"+response[0].alamat_domisili+"</center></td>";
+          }  
+          })
+      }
+
+      function view_all()
+      {
+      
+        const myElement = document.getElementById('navdatatable');
+
+        $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/kunjungan_all",
+          dataType:"JSON",
+          success:function(response){
+            console.log(response);
+             
+            const jsonData = JSON.stringify(response);
+           
+            //myElement.innerHTML ="<td><center>"+response[0].norm+"</td><td><center>"+response[0].no_id+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tgl_lahir+"</center></td><td><center>"+response[0].alamat_domisili+"</center></td>";
           }  
           })
       }

@@ -135,4 +135,11 @@ class crudcontroller extends Controller
         $data_pasien=registrasi::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister')->Join('pasien','kunjungan.norm','=','pasien.norm')->Where('kunjungan.norm',$request->norm)->Where('noregister','LIKE',$request->poli."%")->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday."%")->orderBy('kunjungan.id','DESC')->get();
         return json_decode($data_pasien,JSON_UNESCAPED_SLASHES);
     }
+
+    public function get_data_kunjungan_all(Request $request)
+    {
+        $tday=DATE("Y-m-d");
+        $data_pasien=registrasi::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister')->Join('pasien','kunjungan.norm','=','pasien.norm')->Where('noregister','LIKE',"IGD%")->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday."%")->orderBy('kunjungan.id','DESC')->get();
+        return json_decode($data_pasien,JSON_UNESCAPED_SLASHES);
+    }
 }
