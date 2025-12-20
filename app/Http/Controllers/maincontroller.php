@@ -68,10 +68,18 @@ class maincontroller extends Controller
 
     public function dashboard(Request $request) {
 
+      if ($request->session()->has('username')) {
+            $uname= $request->session()->get('username');
+            $passwd= $request->session()->get('password');
+        }
+        else
+        {    
       $uname=$request->username;
       $passwd=$request->passwd;
+        }
       $get_user=Users::Where('username',$uname)->Where('password',md5($passwd))->count();
       $request->session()->put('username',$uname);
+      $request->session()->put('password',$passwd);
       
       switch ($get_user) {
         case 0:
@@ -80,6 +88,7 @@ class maincontroller extends Controller
         
         default:       
             $user= $request->session()->get('username');
+            $password= $request->session()->get('password');
             $profile=Users::Where('username',$user);
             $total_pasien=Pasien::All()->count();
             $latest_norm= Pasien::SELECT('norm','nama')->Orderby('id','DESC')->limit(1)->get();

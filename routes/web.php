@@ -26,7 +26,7 @@ Route::get('darah',[maincontroller::class,'darah']);
 
 #Frondend
 Route::get('login',[maincontroller::class,'login']);
-Route::post('dashboard',[maincontroller::class,'dashboard']);
+Route::any('dashboard',[maincontroller::class,'dashboard']);
 Route::get('user',[maincontroller::class,'user_new']);
 Route::get('main',[maincontroller::class,'register']);
 

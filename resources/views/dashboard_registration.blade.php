@@ -103,9 +103,11 @@
                 <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
               </a>
             </li>-->
-            <li class="nav-item">          
-                <span class="menu-title">Dashboard</span>
+             <li class="nav-item">
+              <a class="nav-link" href="/dashboard" target="_blank">
+                <span class="menu-title">DASHBOARD</span>
                 <i class="mdi mdi-home menu-icon"></i>
+              </a>
             </li>
             <!--<li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -554,12 +556,18 @@
               dataType: "json",
               success: function(result)
               {
-                alert("simpan"+Jdata);
+                windows.alert("simpan"+Jdata);
               }
           });
 
          
         }
+
+   function dashboard()
+        {
+          
+          
+        }     
 
    function message()
         {

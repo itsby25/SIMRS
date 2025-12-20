@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use App\Models\Pasien;
 use App\Models\registrasi;
+use App\Models\antrian;
 use Illuminate\Http\Request;
 
 class crudcontroller extends Controller
@@ -88,6 +89,8 @@ class crudcontroller extends Controller
     public function add_data_kunjungan(Request $request)
     {
          $urut=registrasi::all()->count();
+         $hini=DATE("Y-m-d");           
+         $antri=antrian::Where('tgl_antrian',$hini)->count();
          $jam_kunjungan=DATE('dmY-his');
         if ($urut < 9)
         {
@@ -98,8 +101,22 @@ class crudcontroller extends Controller
         {
             $noreg=$jam_kunjungan.$urut+1;
         }
-        
         $poli=$request->poli;
+        if ($antri < 9)
+        {
+            $noant=$poli."-".$antri+1;
+
+        }
+        else
+        {
+            $noant=$poli."-".$antri+1;
+        }
+        
+        $que= new antrian();
+        $que->no_antrian = $noant;
+        $que->tgl_antrian = DATE('Y-m-d');
+        $que->save();
+
         switch ($poli) {
             case 'IGD':
                 $id_p=$poli;
@@ -113,6 +130,7 @@ class crudcontroller extends Controller
         } 
         $register= new registrasi();
         $register->noregister = $id_p."-".$noreg;
+        $register->no_antrian = $noant;
         $register->norm = $request->norm;
         $register->status ="0";
 
