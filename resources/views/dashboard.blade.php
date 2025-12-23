@@ -20,7 +20,7 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
   </head>
-  <body>
+  <body onload="startup()">
     <div class="container-scroller">
       <!-- partial:../../partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -418,9 +418,9 @@
       </div>
       <div class="modal-footer">
                             <div class="input-group">
-                              <input type="text" class="form-control" placeholder="Cari Pasien" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                              <input type="text" id="cari" class="form-control" placeholder="Cari Pasien" aria-label="Recipient's username" aria-describedby="basic-addon2">
                               <div class="input-group-append">
-                                <button class="btn btn-sm btn-gradient-primary py-3" type="button">Cari | Search</button>
+                                <button class="btn btn-sm btn-gradient-primary py-3" type="button" onclick="get_nama()">Cari | Search</button>
                               </div>
         </div>
         <a href="main"><button type="button" class="btn btn-info" data-bs-dismiss="modal">New</button></a>
@@ -428,6 +428,60 @@
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">RAWAT JALAN</button>
         <button type="button" class="btn btn-primary">RAWAT INAP</button>
       </div> 
+
+      <div class="modal-body">
+      <div id="card_pendaftaran" class="col-18 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                  
+                      <p class="card-description"> Pendaftaran IGD | Emergency </p>
+                      <div class="row table-responsive">
+                        <table class="table table-striped table-bordered table-hover order-column" border="1" width="100%">
+                                <thead class="btn-success">
+                                    <tr>
+                                        <th>
+                                            <center> NO. RM </center>
+                                        </th>
+                                        <th>
+                                            <center> NIK </center>
+                                        </th>
+                                        <th>
+                                            <center> NOKA.BPJS </center>
+                                        </th>
+                                        <th>
+                                            <center> NAMA PASIEN </center>
+                                        </th>
+                                        <th>
+                                            <center> TANGGAL LAHIR / USIA </center>
+                                        </th>
+                                        <th>
+                                            <center> ALAMAT </center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="datatable">
+                                    <tr>
+                                        <td colspan="5">
+                                            <center><b>Tidak ada data</b></center>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        <div class="page-footer">
+                          
+                          <button class="btn btn-sm btn-gradient-success py-3" onclick="daftar()">Daftar</button>
+                            <button class="btn btn-sm btn-gradient-secondary py-3" onclick="tampil()">View</button>
+                          <button class="btn btn-sm btn-gradient-danger py-3" onclick="startup()">Batal</button>
+                          
+                        </div>   
+                      </div>
+                    </div>    
+                  </div>
+                </div>
+              </div>
+      </div>
+
+      
     </div>
   </div>
 </div>
@@ -518,6 +572,39 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+
+    <script>
+       $(document).ready(function() { 
+    	view_norm();
+      view_nama();
+      view_all();
+      });
+
+       function startup()
+      {      
+            document.getElementById("card_pendaftaran").style.visibility = "hidden";
+           
+      }
+
+      function get_nama(){
+         var a = document.getElementById("cari").value;
+        const myElement = document.getElementById('datatable');
+
+        
+        $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/pasien_get?nama="+a+"",
+          dataType:"JSON",
+          success:function(response){
+            console.log(response);
+             document.getElementById("card_pendaftaran").style.visibility = "visible";
+            //const jsonData = JSON.stringify(response);
+            myElement.innerHTML ="<td><center>"+response[0].norm+"</td><td><center>"+response[0].no_id+"</center></td><td><center>"+response[0].noka_BPJS+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tgl_lahir+"</center></td><td><center>"+response[0].alamat_domisili+"</center></td>";
+          }  
+          })
+      }
+
+    </script>  
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
