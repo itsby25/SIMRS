@@ -124,6 +124,9 @@
                                 </tbody>
                             </table>
             </li>
+            <li class="nav-item">
+            <button id="reload" class="btn btn-sm btn-gradient-light py-3" type="button" onclick="load_ulang()">Refresh</button>
+            </li>  
             <!--<li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Basic UI Elements</span>
@@ -421,6 +424,11 @@
             document.getElementById("card_pendaftaran").style.visibility = "hidden";
             document.getElementById("card_list_emr").style.visibility = "hidden";
            
+      }
+
+      function load_ulang()
+      {
+        location.reload();
       }
 
       function daftar()
