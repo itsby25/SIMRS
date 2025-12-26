@@ -89,9 +89,9 @@ class crudcontroller extends Controller
     public function add_data_kunjungan(Request $request)
     {
          $urut=registrasi::all()->count();
-         $hini=DATE("Y-m-d");           
-         $antri=antrian::Where('tgl_antrian',$hini)->count();
+         $hini=DATE("Y-m-d");                 
          $jam_kunjungan=DATE('dmY-his');
+
         if ($urut < 9)
         {
             $noreg=$jam_kunjungan.$urut+1;
@@ -101,21 +101,7 @@ class crudcontroller extends Controller
         {
             $noreg=$jam_kunjungan.$urut+1;
         }
-        $poli=$request->poli;
-        if ($antri < 9)
-        {
-            $noant=$poli."-".$antri+1;
-
-        }
-        else
-        {
-            $noant=$poli."-".$antri+1;
-        }
-        
-        $que= new antrian();
-        $que->no_antrian = $noant;
-        $que->tgl_antrian = DATE('Y-m-d');
-        $que->save();
+        $poli=$request->poli;   
 
         switch ($poli) {
             case 'IGD':
@@ -128,15 +114,37 @@ class crudcontroller extends Controller
                 $id_p=$poli;
                 break;
         } 
+        $noregdb=$id_p."-".$noreg;
         $register= new registrasi();
-        $register->noregister = $id_p."-".$noreg;
-        $register->no_antrian = $noant;
+        $register->noregister = $noregdb;
         $register->norm = $request->norm;
         $register->status ="0";
-
         $register->save();
 
+        $antri=antrian::Where('tgl_antrian',$hini)->count();
 
+        if ($antri < 9)
+        {
+            $noant=$poli."-".$antri+1;
+
+        }
+        else
+        {
+            $noant=$poli."-".$antri+1;
+        }
+
+
+        $que= new antrian();
+        $que->no_antrian = $noant;
+        $que->no_register = $noregdb;
+        $que->norm = $request->norm;
+        $que->tgl_antrian = $hini;
+        $que->save();
+
+        
+      
+        $update=registrasi::Where('noregister',$noregdb)->update('no_antrian'->$noant);
+        
         echo("tersimpan");
 
     }
@@ -150,14 +158,14 @@ class crudcontroller extends Controller
     public function get_data_kunjungan(Request $request)
     {
         $tday=DATE("Y-m-d");
-        $data_pasien=registrasi::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister','kunjungan.no_antrian')->Join('pasien','kunjungan.norm','=','pasien.norm')->Where('kunjungan.norm',$request->norm)->Where('kunjungan.noregister','LIKE',$request->poli."%")->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday."%")->orderBy('kunjungan.id','DESC')->get();
+        $data_pasien=registrasi::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister','antrian.no_antrian As noantri')->Join('pasien','kunjungan.norm','=','pasien.norm')->Join('antrian','kunjungan.noregister','=','antrian.no_register')->Where('kunjungan.norm',$request->norm)->Where('kunjungan.noregister','LIKE',$request->poli.'%')->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday.'%')->orderBy('kunjungan.id','ASC')->get();
         return json_decode($data_pasien,JSON_UNESCAPED_SLASHES);
     }
 
     public function get_data_kunjungan_all(Request $request)
     {
         $tday=DATE("Y-m-d");
-        $data_pasien=registrasi::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister','kunjungan.no_antrian')->Join('pasien','kunjungan.norm','=','pasien.norm')->Where('noregister','LIKE',"IGD%")->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday."%")->orderBy('kunjungan.id','DESC')->get();
+        $data_pasien=registrasi::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister','antrian.no_antrian As noantri')->Join('pasien','kunjungan.norm','=','pasien.norm')->Join('antrian','kunjungan.noregister','=','antrian.no_register')->Where('noregister','LIKE',"IGD%")->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday."%")->orderBy('kunjungan.id','ASC')->get();
         return json_decode($data_pasien,JSON_UNESCAPED_SLASHES);
     }
 }

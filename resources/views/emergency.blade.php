@@ -458,7 +458,7 @@
             console.log(response);
              document.getElementById("card_list_pasien").style.visibility = "visible";
             //const jsonData = JSON.stringify(response);
-            myElement.innerHTML ="<tr><td><center>"+response[0].no_antrian+"</td><td><center>"+response[0].noregister+"</td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal.substring(0,10)+"</center></td><td><center>"+response[0].tanggal.substring(11)+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td><td><p><button class='btn btn-sm btn-gradient-info py-3'>Batalkan<br>Kunjungan</button></p></td></tr>";
+            myElement.innerHTML ="<tr><td><center>"+response[0].noantri+"</td><td><center>"+response[0].noregister+"</td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal.substring(0,10)+"</center></td><td><center>"+response[0].tanggal.substring(11)+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td><td><p><button class='btn btn-sm btn-gradient-info py-3'>Batalkan<br>Kunjungan</button></p></td></tr>";
           }  
           })
       }
@@ -510,7 +510,7 @@
             console.log(response);
              document.getElementById("card_pendaftaran").style.visibility = "visible";
             //const jsonData = JSON.stringify(response);
-            myElement.innerHTML ="<td><center>"+response[0].norm+"</td><td><center>"+response[0].no_id+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tgl_lahir+"</center></td><td><center>"+response[0].alamat_domisili+"</center></td>";
+            myElement.innerHTML ="<td><center>"+response[0].norm+"</td><td><center>"+response[0].no_id+"</center></td><td><center>"+response[0].noka_BPJS+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tgl_lahir+"</center></td><td><center>"+response[0].alamat_domisili+"</center></td>";
           }  
           })
       }
@@ -528,12 +528,16 @@
             console.log(response);
              
             const jsonData = JSON.stringify(response);
+
+            text = jsonData.forEach(myFunction);
+
+            myElement.innerHTML= text;
+
            
             //myElement.innerHTML ="<td><center>"+response[0].norm+"</td><td><center>"+response[0].no_id+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tgl_lahir+"</center></td><td><center>"+response[0].alamat_domisili+"</center></td>";
           }  
           })
       }
-
       // View already patient registered today with norm
       function view_register(a)
       {
@@ -548,7 +552,7 @@
             console.log(response);
              document.getElementById("card_pendaftaran").style.visibility = "visible";
             //const jsonData = JSON.stringify(response);
-            myElement.innerHTML ="<tr><td><center>"+response[0].no_antrian+"</center></td><td><center>"+response[0].noregister+"</center></td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal.substring(0,10)+"</center></td><td><center>"+response[0].tanggal.substring(11)+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td><td><p><button class='btn btn-sm btn-gradient-info py-3'>Batalkan<br>Kunjungan</button></p></td></tr>";
+            myElement.innerHTML ="<tr><td><center>"+response[0].noantri+"</center></td><td><center>"+response[0].noregister+"</center></td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal.substring(0,10)+"</center></td><td><center>"+response[0].tanggal.substring(11)+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td><td><p><button class='btn btn-sm btn-gradient-info py-3'>Batalkan<br>Kunjungan</button></p></td></tr>";
           }  
           })
       }
