@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>OUT-PATIENT</title>
+    <title>OUTPATIEN | RAWAT JALAN</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/9f2f1fcf1c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
     <script src="index.js"></script>
+
 
     <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
@@ -38,8 +39,21 @@
     <link rel="stylesheet" href="../../assets/css/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+
+    <style>
+        #jamDigital {
+            font-size: 48px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+
   </head>
-  <body>
+  <body onload="startup()">
+
+   <div id="jamDigital"></div>
+  <!--<body>-->  
     <div class="container-scroller">
       <!-- partial:../../partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -59,7 +73,7 @@
                 <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
               </div>
             </form>
-          </div>
+          </div> 
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
@@ -91,10 +105,41 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="/tindakan_igd" aria-expanded="false" aria-controls="tables">
-                <span class="menu-title">Form Tindakan RAWAT JALAN</span>
+                <span class="menu-title">List Pasien POLI | RAWAT JALAN Hari ini</span>
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
+
+            <li class="nav-item">
+           <div class="row table-responsive">
+                        <table class="table table-striped table-bordered table-hover order-column" border="1" width="100%">
+                                <thead class="btn-success">
+                                    <tr>
+                                        <th><center> NO.Antiran </center></th>
+                                        <th><center> NO.Registrasi </center></th>    
+                                        <th><center> NO.RM </center></th>
+                                                                         
+                                    </tr>
+                                </thead>
+                                <tbody id="navdatatable">
+                                   @foreach ($kunjungan_hi as $kun)
+                                    <tr>
+                                       <!-- <td colspan="1">
+                                            <center><b>Tidak ada data</b></center>
+                                        </td>-->
+                                       
+                                         <td><center><b> {{ $kun->antrian }} </b></center></td> 
+                                             <td><center><b> {{ $kun->noregister }} </b></center></td>                                
+                                            <td><center><b> {{ $kun->norm }}<br>{{ $kun->nama }} </b></center></td>
+                                        </td>
+                                    </tr>
+                                   @endforeach 
+                                </tbody>
+                            </table>
+            </li>
+            <li class="nav-item">
+            <button id="reload" class="btn btn-sm btn-gradient-light py-3" type="button" onclick="load_ulang()">Refresh</button>
+            </li>  
             <!--<li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Basic UI Elements</span>
@@ -205,23 +250,24 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="page-header">
-              <h3 class="page-title"> Rawat Jalan </h3>
+              <h3 class="page-title"> Pelayanan POLI | RAWAT JALAN</h3>
+            
             </div>
             <div class="row">
               
-              <div class="col-12 grid-margin">
+              <div class="col-18 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <form class="form-sample">
-                      <p class="card-description"> DATA Pasien </p>
+                  
+                      <p class="card-description">Pencarian DATA Pasien </p>
                       <div class="row">
                         <div class="col-md-3">
                           <div class="form-group">
                           <div class="form-group row">
                             <div class="input-group">
-                              <input type="text" class="form-control" placeholder="Cari No RM Pasien" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                              <input type="text" id="textnorm" class="form-control" placeholder="Cari No RM Pasien" aria-label="Recipient's username" aria-describedby="basic-addon2">
                               <div class="input-group-append">
-                                <button class="btn btn-sm btn-gradient-primary py-3" type="button">Search</button>
+                                <button id="carinorm" class="btn btn-sm btn-gradient-primary py-3" type="button" onclick="view_norm()">Search</button>
                               </div>
                             </div>
                             </div>
@@ -232,9 +278,9 @@
                           <div class="form-group">
                           <div class="form-group row">
                             <div class="input-group">
-                              <input type="text" class="form-control" placeholder="Cari Nama Pasien" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                              <input type="text" id="textnama" class="form-control" placeholder="Cari Nama Pasien" aria-label="Recipient's username" aria-describedby="basic-addon2">
                               <div class="input-group-append">
-                                <button class="btn btn-sm btn-gradient-primary py-3" type="button">Search</button>
+                                <button id="caripasien" class="btn btn-sm btn-gradient-primary py-3" type="button" onclick="view_nama()">Search</button>
                               </div>
                             </div>
                             </div>
@@ -242,12 +288,150 @@
                         </div>
                         
                       </div>
-                      
-                    </form>
                   </div>
                 </div>
               </div>
-            </div>
+
+
+              <!--datatable-->
+              <div id="card_pendaftaran" class="col-18 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                  
+                      <p class="card-description"> Pendaftaran POLI RAWAT JALAN </p>
+                      <p><div class="form-group row">
+                      <label>Pilih Jadwal Poli dan Dokter Tujuan</label>
+                      <select class="js-example-basic-single" style="width:100%">
+                        <option value="M">07:00-14:00 | dr.Sp,M</option>
+                        <option value="PD">07:00-14:00 | dr.Sp,PD</option>
+                        <option value="AN">07:00-14:00 | dr.Sp,AN</option>
+                        <option value="JP">07:00-14:00 | dr.Sp,JP</option>
+                        <option value="OT">07:00-14:00 | dr.Sp,OT</option>
+                      </select>
+                      </div></p>                
+                      <p>
+                        <div class="row table-responsive">
+                        <table class="table table-striped table-bordered table-hover order-column" border="1" width="100%">
+                                <thead class="btn-success">
+                                    <tr>
+                                        <th>
+                                            <center> NO. RM </center>
+                                        </th>
+                                        <th>
+                                            <center> NIK </center>
+                                        </th>
+                                        <th>
+                                            <center> NOKA.BPJS </center>
+                                        </th>
+                                        <th>
+                                            <center> NAMA PASIEN </center>
+                                        </th>
+                                        <th>
+                                            <center> TANGGAL LAHIR / USIA </center>
+                                        </th>
+                                        <th>
+                                            <center> ALAMAT </center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="datatable">
+                                    <tr>
+                                        <td colspan="5">
+                                            <center><b>Tidak ada data</b></center>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>    
+                          </p>
+                          <p>  
+                           <div class="page-footer">  
+                          <button class="btn btn-sm btn-gradient-success py-3" onclick="daftar()">Daftar</button>
+                            <button class="btn btn-sm btn-gradient-secondary py-3" onclick="tampil()">View</button>
+                          <button class="btn btn-sm btn-gradient-danger py-3" onclick="startup()">Batal</button>
+                          </p>
+
+                          <p>
+                          <h4 class="card-title">Dokter Yang tersedia.</h4>
+                          <p class="card-description"> Pilihlah <code>Jadwal Dokter Yang tersedia</code> di tabel berikut untuk memastikan anda dapat dilayani sesuai dengan jadwal dokter yang anda inginkan </p>
+                        </div> 
+                        <div>
+                        <div class="row table-responsive">
+                        <table class="table table-striped table-hover order-column" border="1" width="100%">
+                                <tbody id="datatable">
+                                    <tr>
+                                        <td colspan="8">
+                                            <center><b><code>Belum Ada Jadwal Dokter Yang Tersedia</code></b></center>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>    
+                      </div>
+                    </div>    
+                  </div>
+                </div>
+              </div>
+
+              <!--datapasien IGD-->
+              <div id="card_list_pasien" class="col-18 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                  
+                      <p class="card-description"> List Pelayanan Rawat Jalan</p>
+                      <div class="row table-responsive">
+                        <table class="table table-striped table-bordered table-hover order-column" border="1" width="100%">
+                                <thead class="btn-success">
+                                    <tr>
+                                      <th>
+                                            <center> No Antrian Pelayanan </center>
+                                        </th>
+                                       <th>
+                                            <center> No Registrasi / ID PEMERIKSAAN </center>
+                                        </th>	
+                                        <th>
+                                            <center> Norm </center>
+                                        </th>
+                                        <th>
+                                            <center> Nama Pasien </center>
+                                        </th>
+                                        <th>
+                                            <center> Tanggal </center>
+                                        </th>
+                                        <th>
+                                            <center> Jam </center>
+                                        </th>
+                                        <th>
+                                            <center> Poli </center>
+                                        </th>
+                                        <th>
+                                            <center> Nama Dokter </center>
+                                        </th>
+                                        <th>
+                                            <center> Penjamin </center>
+                                        </th>                                        
+                                        <th>
+                                            <center> ACTION </center>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listdatapasien">
+                                    <tr>
+                                        <td colspan="9">
+                                            <center><b>Tidak ada data</b></center>
+                                        </td>
+                                        <td colspan="1">
+                                            <p><button class="btn btn-sm btn-gradient-dark py-3">E-Medical Record</button></p>                                     
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>  
+                      </div>
+                    </div>    
+                  </div>
+                </div>
+              </div>
+              </div>
+          </div>
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:../../partials/_footer.html -->
@@ -263,6 +447,162 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+
+    <script>
+      $(document).ready(function() { 
+    	view_norm();
+      view_nama();
+      view_all();
+      });
+
+      function startup()
+      {  
+            document.getElementById("card_list_pasien").style.visibility = "hidden";
+            document.getElementById("card_pendaftaran").style.visibility = "hidden";
+            document.getElementById("card_list_emr").style.visibility = "hidden";     
+      }
+
+      function load_ulang()
+      {
+        location.reload();
+      }
+
+      function daftar()
+      {
+       var a = document.getElementById("textnorm").value; 
+       //alert("Cek Data registrasi dulu ya");
+      $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/kunjungan_get?norm="+a+"&poli=IGD",
+          dataType:"JSON",
+          success:function(response){
+            var jml= response.length;
+            if (jml > 0)
+            {
+              alert ("ada "+jml+" data kunjungan hari ini belum tertutup, masih dalam pelayanan.Selesaikan dahulu proses sebelumnya untuk melanjutkan pelayanan yang lain"); 
+            }
+            else{
+              document.getElementById("card_list_pasien").style.visibility = "visible";
+              register_px(a);
+              view_register(a);
+            }
+          }  
+          })
+              
+      }
+       //view already registered today.
+      function tampil() {
+         var a = document.getElementById("textnorm").value; 
+          const myElement = document.getElementById('listdatapasien');
+           $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/kunjungan_get?norm="+a+"&poli=IGD",
+          dataType:"JSON",
+          success:function(response){
+            console.log(response);
+             document.getElementById("card_list_pasien").style.visibility = "visible";
+            //const jsonData = JSON.stringify(response);
+            myElement.innerHTML ="<tr><td><center>"+response[0].noantri+"</td><td><center>"+response[0].noregister+"</td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal.substring(0,10)+"</center></td><td><center>"+response[0].tanggal.substring(11)+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td><td><p><button class='btn btn-sm btn-gradient-info py-3'>Batalkan<br>Kunjungan</button></p></td></tr>";
+          }  
+          })
+      }
+
+      function register_px(a)
+      {
+        var a = a; 
+        const myElement = document.getElementById('listdatapasien');
+
+        $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/kunjungan_new?norm="+a+"&poli=IGD",
+          dataType:"JSON",
+          success:function(response){
+            console.log(response);             
+          }  
+          })
+      }
+
+      function view_norm()
+      {
+        var a = document.getElementById("textnorm").value;
+        const myElement = document.getElementById('datatable');
+
+        $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/pasien_get?norm="+a+"",
+          dataType:"JSON",
+          success:function(response){
+            console.log(response);
+             document.getElementById("card_pendaftaran").style.visibility = "visible";
+            //const jsonData = JSON.stringify(response);
+            myElement.innerHTML ="<td><center>"+response[0].norm+"</td><td><center>"+response[0].no_id+"</center></td><td><center>"+response[0].noka_BPJS+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tgl_lahir+"</center></td><td><center>"+response[0].alamat_domisili+"</center></td>";
+          }  
+          })
+           
+      }
+
+      function view_nama()
+      {
+        var a = document.getElementById("textnama").value;
+        const myElement = document.getElementById('datatable');
+
+        $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/pasien_get?nama="+a+"",
+          dataType:"JSON",
+          success:function(response){
+            console.log(response);
+             document.getElementById("card_pendaftaran").style.visibility = "visible";
+            //const jsonData = JSON.stringify(response);
+            myElement.innerHTML ="<td><center>"+response[0].norm+"</td><td><center>"+response[0].no_id+"</center></td><td><center>"+response[0].noka_BPJS+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tgl_lahir+"</center></td><td><center>"+response[0].alamat_domisili+"</center></td>";
+          }  
+          })
+      }
+
+      function view_all()
+      {
+      
+        const myElement = document.getElementById('navdatatable');
+
+        $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/kunjungan_all",
+          dataType:"JSON",
+          success:function(response){
+            console.log(response);
+             
+            const jsonData = JSON.stringify(response);
+
+            text = jsonData.forEach(myFunction);
+
+            myElement.innerHTML= text;
+
+           
+            //myElement.innerHTML ="<td><center>"+response[0].norm+"</td><td><center>"+response[0].no_id+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tgl_lahir+"</center></td><td><center>"+response[0].alamat_domisili+"</center></td>";
+          }  
+          })
+      }
+      // View already patient registered today with norm
+      function view_register(a)
+      {
+        var a = a; 
+        const myElement = document.getElementById('listdatapasien');
+
+        $.ajax({
+          type:"GET",
+          url:"http://127.0.0.1:8000/kunjungan_get?norm="+a+"&poli=IGD",
+          dataType:"JSON",
+          success:function(response){
+            console.log(response);
+             document.getElementById("card_pendaftaran").style.visibility = "visible";
+            //const jsonData = JSON.stringify(response);
+            myElement.innerHTML ="<tr><td><center>"+response[0].noantri+"</center></td><td><center>"+response[0].noregister+"</center></td><td><center>"+response[0].norm+"</center></td><td><center>"+response[0].nama+"</center></td><td><center>"+response[0].tanggal.substring(0,10)+"</center></td><td><center>"+response[0].tanggal.substring(11)+"</center></td><td><center></center></td><td><center></center></td><td colspan='1'><p><button class='btn btn-sm btn-gradient-danger py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-warning py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-success py-3'>E-Medical Record</button></p><p><button class='btn btn-sm btn-gradient-dark py-3'>E-Medical Record</button></p></td><td><p><button class='btn btn-sm btn-gradient-info py-3'>Batalkan<br>Kunjungan</button></p></td></tr>";
+          }  
+          })
+      }
+
+
+    </script>  
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
@@ -275,6 +615,9 @@
     <script src="../../assets/js/settings.js"></script>
     <script src="../../assets/js/todolist.js"></script>
     <script src="../../assets/js/jquery.cookie.js"></script>
+    <script src="../../assets/js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script src="../../assets/js/script.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->

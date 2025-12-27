@@ -26,8 +26,9 @@ class maincontroller extends Controller
     }
 
     public function rajal() {
-
-        return view('outpatient');
+         $tday=DATE("Y-m-d");
+        $kunjungan_hi=Kunjungan::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister','antrian.no_antrian As antrian')->Join('pasien','kunjungan.norm','=','pasien.norm')->Join('antrian','kunjungan.noregister','=','antrian.no_register')->Where('noregister','LIKE',"RJ%")->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday."%")->OrderBy('kunjungan.id','ASC')->get();
+        return view('outpatient',compact('kunjungan_hi'));
     }
      
     public function login() {
