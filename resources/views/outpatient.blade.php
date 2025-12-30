@@ -300,13 +300,12 @@
                   
                       <p class="card-description"> Pendaftaran POLI RAWAT JALAN </p>
                       <p><div class="form-group row">
-                      <label>Pilih Jadwal Poli dan Dokter Tujuan</label>
-                      <select class="js-example-basic-single" style="width:100%">
-                        <option value="M">07:00-14:00 | dr.Sp,M</option>
-                        <option value="PD">07:00-14:00 | dr.Sp,PD</option>
-                        <option value="AN">07:00-14:00 | dr.Sp,AN</option>
-                        <option value="JP">07:00-14:00 | dr.Sp,JP</option>
-                        <option value="OT">07:00-14:00 | dr.Sp,OT</option>
+                      <label>Pilih Poli Tujuan</label>
+                      <select id="poli" class="js-example-basic-single" style="width:100%">                        
+                        <option >Pilih Salah Satu POLI</option>
+                         @foreach ($layanan_hi as $lay)
+                        <option value="{{ $lay->kode_layanan }}">{{ $lay->nama_layanan}}</option>
+                         @endforeach 
                       </select>
                       </div></p>                
                       <p>
@@ -470,10 +469,11 @@
       function daftar()
       {
        var a = document.getElementById("textnorm").value; 
+       var pl = document.getElementById("poli").value;
        //alert("Cek Data registrasi dulu ya");
       $.ajax({
           type:"GET",
-          url:"http://127.0.0.1:8000/kunjungan_get?norm="+a+"&poli=IGD",
+          url:"http://127.0.0.1:8000/kunjungan_get?norm="+a+"&poli="+pl+"",
           dataType:"JSON",
           success:function(response){
             var jml= response.length;
@@ -510,11 +510,12 @@
       function register_px(a)
       {
         var a = a; 
+        var pl = document.getElementById("poli").selected;
         const myElement = document.getElementById('listdatapasien');
 
         $.ajax({
           type:"GET",
-          url:"http://127.0.0.1:8000/kunjungan_new?norm="+a+"&poli=IGD",
+          url:"http://127.0.0.1:8000/kunjungan_new?norm="+a+"&poli="+pl+"",
           dataType:"JSON",
           success:function(response){
             console.log(response);             
