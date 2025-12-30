@@ -50,15 +50,12 @@
     </style>
 
   </head>
-  <body onload="startup()">
-
-   <div id="jamDigital"></div>
+  <body onload="startTime();">
   <!--<body>-->  
     <div class="container-scroller">
       <!-- partial:../../partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
-        
+        <div id="txt" class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">   
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -74,6 +71,7 @@
               </div>
             </form>
           </div> 
+         
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
@@ -139,7 +137,8 @@
             </li>
             <li class="nav-item">
             <button id="reload" class="btn btn-sm btn-gradient-light py-3" type="button" onclick="load_ulang()">Refresh</button>
-            </li>  
+            </li> 
+             
             <!--<li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Basic UI Elements</span>
@@ -602,6 +601,22 @@
           })
       }
 
+      function startTime() {
+        const today = new Date();
+        let h = today.getHours();
+        let m = today.getMinutes();
+        let s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+        setTimeout(startTime, 1000);
+        startup();
+      }
+
+      function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+      }
 
     </script>  
     <!-- container-scroller -->
