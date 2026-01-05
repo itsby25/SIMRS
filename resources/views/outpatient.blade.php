@@ -50,7 +50,7 @@
     </style>
 
   </head>
-  <body onload="startTime();">
+  <body onload="startTime(); startup();">
   <!--<body>-->  
     <div class="container-scroller">
       <!-- partial:../../partials/_navbar.html -->
@@ -301,9 +301,9 @@
                       <p><div class="form-group row">
                       <label>Pilih Poli Tujuan</label>
                       <select id="poli" class="js-example-basic-single" style="width:100%">                        
-                        <option >Pilih Salah Satu POLI</option>
+                        <option value="">Pilih Salah Satu POLI</option>
                          @foreach ($layanan_hi as $lay)
-                        <option value="{{ $lay->kode_layanan }}">{{ $lay->nama_layanan}}</option>
+                        <option value="{{ $lay->kd_layanan}}">{{ $lay->nama_layanan}}</option>
                          @endforeach 
                       </select>
                       </div></p>                
@@ -470,6 +470,8 @@
        var a = document.getElementById("textnorm").value; 
        var pl = document.getElementById("poli").value;
        //alert("Cek Data registrasi dulu ya");
+       console.log(pl);
+
       $.ajax({
           type:"GET",
           url:"http://127.0.0.1:8000/kunjungan_get?norm="+a+"&poli="+pl+"",
@@ -492,10 +494,11 @@
        //view already registered today.
       function tampil() {
          var a = document.getElementById("textnorm").value; 
+          var pl = document.getElementById("poli").value;
           const myElement = document.getElementById('listdatapasien');
            $.ajax({
           type:"GET",
-          url:"http://127.0.0.1:8000/kunjungan_get?norm="+a+"&poli=IGD",
+          url:"http://127.0.0.1:8000/kunjungan_get?norm="+a+"&poli="+pl+"",
           dataType:"JSON",
           success:function(response){
             console.log(response);
@@ -509,7 +512,7 @@
       function register_px(a)
       {
         var a = a; 
-        var pl = document.getElementById("poli").selected;
+        var pl = document.getElementById("poli").value;
         const myElement = document.getElementById('listdatapasien');
 
         $.ajax({
@@ -610,7 +613,7 @@
         s = checkTime(s);
         document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
         setTimeout(startTime, 1000);
-        startup();
+      
       }
 
       function checkTime(i) {

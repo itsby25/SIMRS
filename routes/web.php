@@ -9,6 +9,11 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
+Route::get('clock', function () {
+    return view('clock');
+});
+
+
 #sub_service
 Route::get('tindakan_igd',[maincontroller::class,'in_igd']);
 #services
