@@ -134,11 +134,52 @@
                                    @endforeach 
                                 </tbody>
                             </table>
+            </div>
             </li>
             <li class="nav-item">
             <button id="reload" class="btn btn-sm btn-gradient-light py-3" type="button" onclick="load_ulang()">Refresh</button>
             </li> 
-             
+            <!--Jadwal dokter Spesialis-->
+
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="collapse" href="/tindakan_igd" aria-expanded="false" aria-controls="tables">
+                <span class="menu-title">List Jadwal Dokter Praktek</span>
+                <i class="mdi mdi-table-large menu-icon"></i>
+              </a>
+            </li>
+
+            <li class="nav-item">
+           <div class="row table-responsive">
+                        <table class="table table-striped table-bordered table-hover order-column" border="1" width="100%">
+                                <thead class="btn-success">
+                                    <tr>
+                                        <th><center> Nama Dokter </center></th>
+                                        <th><center> Jadwal </center></th>    
+                                        <th><center> Poli</center></th>
+                                                                         
+                                    </tr>
+                                </thead>
+                                <tbody id="navdatatable">
+                                   @foreach ($jadwl_dokter as $jd)
+                                    <tr>
+                                       <!-- <td colspan="1">
+                                            <center><b>Tidak ada data</b></center>
+                                        </td>-->
+                                       
+                                         <td><center><b> {{ $jd->nama_dpjp }} </b></center></td> 
+                                             <td><center><b> {{ $jd->hari_p }} | {{$jd->jam_p}} </b></center></td>                                
+                                            <td><center><b> {{ $jd->poli }} </b></center></td>
+                                        </td>
+                                    </tr>
+                                   @endforeach 
+                                </tbody>
+                            </table>
+             </div>                
+            </li>
+            <li class="nav-item">
+            <button id="reload" class="btn btn-sm btn-gradient-light py-3" type="button" onclick="load_ulang()">View</button>
+            </li>
+            
             <!--<li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Basic UI Elements</span>
@@ -362,8 +403,39 @@
                                         </td>
                                     </tr>
                                 </tbody>
+                        </table>
+                        <div class="row table-responsive">
+                        <table class="table table-striped table-bordered table-hover order-column" border="1" width="100%">
+                                <thead class="btn-success">
+                                    <tr>
+                                        <th><center> Nama Dokter </center></th>
+                                        <th><center> Jadwal </center></th>    
+                                        <th><center> Poli</center></th>
+                                         <th><center> Aksi</center></th>
+                                                                         
+                                    </tr>
+                                </thead>
+                                <tbody id="navdatatable">
+                                   @foreach ($jadwl_dokter as $jd)
+                                    <tr>
+                                       <!-- <td colspan="1">
+                                            <center><b>Tidak ada data</b></center>
+                                        </td>-->
+                                       
+                                         <td><center><b> {{ $jd->nama_dpjp }} </b></center></td> 
+                                             <td><center><b> {{ $jd->hari_p }} | {{$jd->jam_p}} </b></center></td>                                
+                                            <td><center><b> {{ $jd->poli }} </b></center></td>
+                                            <td><center><b><input type="checkbox">Pilih</b></center></td>
+                                        </td>
+                                    </tr>
+                                   @endforeach 
+                                </tbody>
                             </table>
-                        </div>    
+             </div>
+                        </div>
+                        
+                        
+                        
                       </div>
                     </div>    
                   </div>

@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class layanan extends Model
+class dpjp extends Model
 {
-     use HasFactory;
-     protected $table='layanan';
-     protected $cast=['no'=>'string'];
+    use HasFactory;
+    protected $table='dpjp';
+    protected $cast=['no'=>'string'];
 }

@@ -5,6 +5,8 @@ use App\Models\Users;
 use App\Models\Pasien;
 use App\Models\Kunjungan;
 use App\Models\layanan;
+use App\Models\Jadwal_Praktek;
+use App\Models\dpjp;
 
 use Illuminate\Http\Request;
 
@@ -21,6 +23,7 @@ class maincontroller extends Controller
         return view('emergency',compact('kunjungan_hi'));
     }
 
+    
     public function rawin() {
 
         return view('inpatient');
@@ -28,9 +31,10 @@ class maincontroller extends Controller
 
     public function rajal() {
          $tday=DATE("Y-m-d");
-        $kunjungan_hi=Kunjungan::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister','antrian.no_antrian As antrian')->Join('pasien','kunjungan.norm','=','pasien.norm')->Join('antrian','kunjungan.noregister','=','antrian.no_register')->Where('noregister','LIKE',"RJ%")->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday."%")->OrderBy('kunjungan.id','ASC')->get();
+        $kunjungan_hi=Kunjungan::SELECT('pasien.norm AS norm','pasien.nama AS nama','kunjungan.created_at As tanggal','kunjungan.noregister As noregister','antrian.no_antrian As antrian')->Join('pasien','kunjungan.norm','=','pasien.norm')->Join('antrian','kunjungan.noregister','=','antrian.no_register')->Where('noregister','NOT LIKE',"IGD%")->Where('kunjungan.status','0')->Where('kunjungan.created_at','LIKE',$tday."%")->OrderBy('kunjungan.id','ASC')->get();
         $layanan_hi=layanan::all();
-        return view('outpatient',compact('kunjungan_hi','layanan_hi'));
+        $jadwl_dokter=dpjp::SELECT('dpjp.nama_dokter AS nama_dpjp','dpjp.status AS status_dpjp','dpjp.no_sip','jadwal_praktek.jam_praktek AS jam_p','jadwal_praktek.hari_praktek AS hari_p','jadwal_praktek.shift','layanan.kd_layanan','layanan.nama_layanan AS poli')->Join('jadwal_praktek','dpjp.no','=','jadwal_praktek.id')->Join('layanan','dpjp.jenis_praktek','=','layanan.kode_layanan')->get();
+        return view('outpatient',compact('kunjungan_hi','layanan_hi','jadwl_dokter'));
     }
      
     public function login() {

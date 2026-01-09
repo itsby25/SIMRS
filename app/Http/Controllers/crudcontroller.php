@@ -114,12 +114,16 @@ class crudcontroller extends Controller
                 $id_p=$poli;
                 break;
         } 
+
+        if ($id_p=="")
+        {    
         $noregdb=$id_p."-".$noreg;
         $register= new registrasi();
         $register->noregister = $noregdb;
         $register->norm = $request->norm;
         $register->status ="0";
         $register->save();
+      
 
         $antri=antrian::Where('tgl_antrian',$hini)->count();
 
@@ -146,6 +150,11 @@ class crudcontroller extends Controller
         $update=registrasi::Where('noregister',$noregdb)->update('no_antrian'->$noant);
         
         echo("tersimpan");
+        }
+        else
+        {
+        echo ("tidak tersimpan");    
+        }
 
     }
 
